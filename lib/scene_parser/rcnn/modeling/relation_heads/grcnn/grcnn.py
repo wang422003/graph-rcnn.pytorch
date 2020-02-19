@@ -1,5 +1,4 @@
 # Graph R-CNN for scene graph generation
-# Reimnplemetned by Jianwei Yang (jw2yang@gatech.edu)
 
 import numpy as np
 import torch
@@ -12,8 +11,9 @@ from ..roi_relation_box_predictors import make_roi_relation_box_predictor
 from ..roi_relation_predictors import make_roi_relation_predictor
 from .agcn.agcn import _GraphConvolutionLayer_Collect, _GraphConvolutionLayer_Update
 
+
 class GRCNN(nn.Module):
-	# def __init__(self, fea_size, dropout=False, gate_width=1, use_kernel_function=False):
+    # def __init__(self, fea_size, dropout=False, gate_width=1, use_kernel_function=False):
     def __init__(self, cfg, in_channels):
         super(GRCNN, self).__init__()
         self.cfg = cfg
@@ -114,7 +114,7 @@ class GRCNN(nn.Module):
             # message from other objects
             source_obj = self.gcn_collect_score(obj_scores[t], obj_scores[t], obj_obj_map, 4)
 
-            #essage from predicate
+            # essage from predicate
             source_rel_sub = self.gcn_collect_score(obj_scores[t], pred_scores[t], subj_pred_map, 0)
             source_rel_obj = self.gcn_collect_score(obj_scores[t], pred_scores[t], obj_pred_map, 1)
             source2obj_all = (source_obj + source_rel_sub + source_rel_obj) / 3
@@ -136,6 +136,7 @@ class GRCNN(nn.Module):
             obj_class_labels = obj_class_logits[:, 1:].max(1)[1] + 1
 
         return (x_pred), obj_class_logits, pred_class_logits, obj_class_labels, rel_inds
+
 
 def build_grcnn_model(cfg, in_channels):
     return GRCNN(cfg, in_channels)

@@ -1,6 +1,4 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 # Relation head for predicting relationship between object pairs.
-# Written by Jianwei Yang (jw2yang@gatech.edu).
 import numpy as np
 import torch
 from torch import nn
@@ -17,6 +15,7 @@ from .imp.imp import build_imp_model
 from .msdn.msdn import build_msdn_model
 from .grcnn.grcnn import build_grcnn_model
 from .reldn.reldn import build_reldn_model
+
 
 class ROIRelationHead(torch.nn.Module):
     """
@@ -178,7 +177,7 @@ class ROIRelationHead(torch.nn.Module):
                 x,
                 proposal_pairs,
                 dict(loss_obj_classifier=loss_obj_classifier,
-                     loss_relpn = loss_relpn,
+                     loss_relpn=loss_relpn,
                      loss_pred_classifier=loss_pred_classifier),
             )
         else:
@@ -189,6 +188,7 @@ class ROIRelationHead(torch.nn.Module):
                 dict(loss_obj_classifier=loss_obj_classifier,
                      loss_pred_classifier=loss_pred_classifier),
             )
+
 
 def build_roi_relation_head(cfg, in_channels):
     """

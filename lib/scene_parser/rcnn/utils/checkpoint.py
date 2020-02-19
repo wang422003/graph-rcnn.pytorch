@@ -1,4 +1,3 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import logging
 import os
 
@@ -150,6 +149,7 @@ class DetectronCheckpointer(Checkpointer):
             loaded = dict(model=loaded)
         return loaded
 
+
 class SceneParserCheckpointer(Checkpointer):
     def __init__(
         self,
@@ -172,7 +172,7 @@ class SceneParserCheckpointer(Checkpointer):
             paths_catalog = import_file(
                 "lib.config.paths_catalog", self.cfg.PATHS_CATALOG, True
             )
-            catalog_f = paths_catalog.ModelCatalog.get(f[len("catalog://") :])
+            catalog_f = paths_catalog.ModelCatalog.get(f[len("catalog://"):])
             self.logger.info("{} points to {}".format(f, catalog_f))
             f = catalog_f
         # download url files

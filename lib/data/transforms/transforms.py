@@ -1,4 +1,3 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 import random
 
 import torch
@@ -73,6 +72,7 @@ class RandomHorizontalFlip(object):
             target = target.transpose(0)
         return image, target
 
+
 class RandomVerticalFlip(object):
     def __init__(self, prob=0.5):
         self.prob = prob
@@ -83,7 +83,11 @@ class RandomVerticalFlip(object):
             target = target.transpose(1)
         return image, target
 
+
 class ColorJitter(object):
+    """
+    Randomly change the brightness, contrast, saturation ans hue of an image.
+    """
     def __init__(self,
                  brightness=None,
                  contrast=None,

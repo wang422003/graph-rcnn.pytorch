@@ -17,6 +17,7 @@ from .rcnn.modeling.relation_heads.relation_heads import build_roi_relation_head
 
 SCENE_PAESER_DICT = ["sg_baseline", "sg_imp", "sg_msdn", "sg_grcnn", "sg_reldn"]
 
+
 class SceneParser(GeneralizedRCNN):
     "Scene Parser"
     def __init__(self, cfg):
@@ -154,10 +155,11 @@ class SceneParser(GeneralizedRCNN):
         # result = self._post_processing(result)
         return result
 
+
 def get_save_dir(cfg):
     train_mode = "joint" if cfg.MODEL.WEIGHT_DET == "" else "step"
-    iter_step = max([cfg.MODEL.ROI_RELATION_HEAD.IMP_FEATURE_UPDATE_STEP, \
-                     cfg.MODEL.ROI_RELATION_HEAD.MSDN_FEATURE_UPDATE_STEP, \
+    iter_step = max([cfg.MODEL.ROI_RELATION_HEAD.IMP_FEATURE_UPDATE_STEP,
+                     cfg.MODEL.ROI_RELATION_HEAD.MSDN_FEATURE_UPDATE_STEP,
                      cfg.MODEL.ROI_RELATION_HEAD.GRCNN_FEATURE_UPDATE_STEP])
     alg = cfg.MODEL.ALGORITHM + '_relpn' if cfg.MODEL.USE_RELPN else cfg.MODEL.ALGORITHM
     train_alg = (alg + '_' + train_mode + '_' + str(iter_step)) if "sg" in cfg.MODEL.ALGORITHM else cfg.MODEL.ALGORITHM
@@ -171,8 +173,10 @@ def get_save_dir(cfg):
         os.makedirs(os.path.join("checkpoints", outdir))
     return os.path.join("checkpoints", outdir)
 
+
 def build_scene_parser(cfg):
     return SceneParser(cfg)
+
 
 def build_scene_parser_optimizer(cfg, model, local_rank=0, distributed=False):
     save_to_disk = True
@@ -187,7 +191,7 @@ def build_scene_parser_optimizer(cfg, model, local_rank=0, distributed=False):
         )
     save_to_disk = get_rank() == 0
     checkpointer = SceneParserCheckpointer(cfg, model, optimizer, scheduler, save_dir, save_to_disk,
-        logger=logging.getLogger("scene_graph_generation.checkpointer"))
+                                           logger=logging.getLogger("scene_graph_generation.checkpointer"))
     model_weight = cfg.MODEL.WEIGHT_DET if cfg.MODEL.WEIGHT_DET != "" else cfg.MODEL.WEIGHT_IMG
     extra_checkpoint_data = checkpointer.load(model_weight, resume=cfg.resume)
     if cfg.MODEL.ROI_RELATION_HEAD.USE_GT_BOXES:

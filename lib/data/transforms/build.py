@@ -1,5 +1,5 @@
-# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 from . import transforms as T
+
 
 def build_transforms(cfg, is_train=True):
     if is_train:
@@ -36,8 +36,9 @@ def build_transforms(cfg, is_train=True):
         [
             color_jitter,
             T.Resize(min_size, max_size),
-            # T.RandomHorizontalFlip(flip_horizontal_prob), # NOTE: mute this since spatial repations is snesible to this
-            # T.RandomVerticalFlip(flip_vertical_prob), # NOTE: mute this since spatial repations is snesible to this
+            # T.RandomHorizontalFlip(flip_horizontal_prob),
+            # --NOTE: mute this since spatial repetitions is sensible to this
+            # T.RandomVerticalFlip(flip_vertical_prob), # NOTE: mute this since spatial repetitions is sensible to this
             T.ToTensor(),
             normalize_transform,
         ]
